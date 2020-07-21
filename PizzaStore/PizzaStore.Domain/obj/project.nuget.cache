@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "/NX2Y9cffNOtsUYy4eo/HFY3T6tbfXIkzna+yIMOf5OMBVkIWo/Ofyb1f8Y7ou6pi6eTXJ0adXs3sdzNmCJNNA==",
+  "success": true,
+  "projectFilePath": "/home/henry/Documents/Revature/Week_1/PizzaStore/PizzaStore.Domain/PizzaStore.Domain.csproj",
+  "expectedPackageFiles": [
+    "/home/henry/.nuget/packages/microsoft.netcore.platforms/1.1.0/microsoft.netcore.platforms.1.1.0.nupkg.sha512",
+    "/home/henry/.nuget/packages/netstandard.library/2.0.3/netstandard.library.2.0.3.nupkg.sha512"
+  ],
+  "logs": []
+}

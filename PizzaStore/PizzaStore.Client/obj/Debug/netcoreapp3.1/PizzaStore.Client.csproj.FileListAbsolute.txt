@@ -1,0 +1,16 @@
+/home/henry/Documents/Revature/Week_1/PizzaStore/PizzaStore.Client/obj/Debug/netcoreapp3.1/PizzaStore.Client.csprojAssemblyReference.cache
+/home/henry/Documents/Revature/Week_1/PizzaStore/PizzaStore.Client/obj/Debug/netcoreapp3.1/PizzaStore.Client.AssemblyInfoInputs.cache
+/home/henry/Documents/Revature/Week_1/PizzaStore/PizzaStore.Client/obj/Debug/netcoreapp3.1/PizzaStore.Client.AssemblyInfo.cs
+/home/henry/Documents/Revature/Week_1/PizzaStore/PizzaStore.Client/obj/Debug/netcoreapp3.1/PizzaStore.Client.csproj.CoreCompileInputs.cache
+/home/henry/Documents/Revature/Week_1/PizzaStore/PizzaStore.Client/bin/Debug/netcoreapp3.1/PizzaStore.Client
+/home/henry/Documents/Revature/Week_1/PizzaStore/PizzaStore.Client/bin/Debug/netcoreapp3.1/PizzaStore.Client.deps.json
+/home/henry/Documents/Revature/Week_1/PizzaStore/PizzaStore.Client/bin/Debug/netcoreapp3.1/PizzaStore.Client.runtimeconfig.json
+/home/henry/Documents/Revature/Week_1/PizzaStore/PizzaStore.Client/bin/Debug/netcoreapp3.1/PizzaStore.Client.runtimeconfig.dev.json
+/home/henry/Documents/Revature/Week_1/PizzaStore/PizzaStore.Client/bin/Debug/netcoreapp3.1/PizzaStore.Client.dll
+/home/henry/Documents/Revature/Week_1/PizzaStore/PizzaStore.Client/bin/Debug/netcoreapp3.1/PizzaStore.Client.pdb
+/home/henry/Documents/Revature/Week_1/PizzaStore/PizzaStore.Client/bin/Debug/netcoreapp3.1/PizzaStore.Domain.dll
+/home/henry/Documents/Revature/Week_1/PizzaStore/PizzaStore.Client/bin/Debug/netcoreapp3.1/PizzaStore.Domain.pdb
+/home/henry/Documents/Revature/Week_1/PizzaStore/PizzaStore.Client/obj/Debug/netcoreapp3.1/PizzaStore.Client.csproj.CopyComplete
+/home/henry/Documents/Revature/Week_1/PizzaStore/PizzaStore.Client/obj/Debug/netcoreapp3.1/PizzaStore.Client.dll
+/home/henry/Documents/Revature/Week_1/PizzaStore/PizzaStore.Client/obj/Debug/netcoreapp3.1/PizzaStore.Client.pdb
+/home/henry/Documents/Revature/Week_1/PizzaStore/PizzaStore.Client/obj/Debug/netcoreapp3.1/PizzaStore.Client.genruntimeconfig.cache
