@@ -90,3 +90,24 @@ as a store, i should be able do this:
 + see pizza type, count, revenue by week or by month
 
 > the goal is to try to complete as many reqs as you can in the time alloted. :)
+
+necessary
+[required] each order must be able to view/list/edit its collection of pizzas
+[required] each order must be able to compute its pricing
+[required] each pizza must be able to have a crust [done]
+[required] each pizza must be able to have a size [done]
+[required] each pizza must be able to have toppings[done]
+[required] each pizza must be able to compute its pricing
+[required] must be able to view/list its order history
+cool
+[required] there should exist at least 2 stores for a user to choose from
+[required] each store should be able to view/list any and all of their completed/placed orders
+
+neat
+[required] each store should be able to view/list any and all of their sales (amount of revenue weekly or monthly)
+[required] each order must be limited to a total pricing of no more than $250
+[required] each order must be limited to a collection of pizzas of no more than 50
+[required] each pizza must have no less than 2 default toppings
+[required] each pizza must limit its toppings to no more 5
+[required] must be able to only order from 1 location in a 24-hour period with no reset
+[required] must be able to only order once every 2-hour period
