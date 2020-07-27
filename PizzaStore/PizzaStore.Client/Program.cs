@@ -13,43 +13,125 @@ namespace PizzaStore.Client
         static void Main(string[] args)
         {
             PIZZASTORE2Context dbo = new PIZZASTORE2Context();
+            CL.Store currentStore= new CL.Store("temp");
             List<CL.Store> availableStores = new List<CL.Store>();
             {
                 foreach(var s in dbo.Store2.ToList())
                 {
                     var tempStore = new CL.Store(s.Name);
-                    foreach(var oj in dbo.OrderJunction2)
+                    foreach(var oj in dbo.OrderJunction2){
                         if(oj.StoreId == s.StoreId){
                         var tempID = oj.OrderId;
                         }
                         foreach(var o in dbo.Order2){
                             //if(tempID == o.OrderId){
                                 var tempOrder = new CL.Order();
-                                //foreach(var pj in dbo.)
-                                //tempOrder.pizzas = o
+                                /*
+                                //foreach(var poj in dbo.PizzaOrderJunction2.ToList()){
+                                if(tempID == poj.OrderId){
+                                    List<string> toppings = new List<string>();
+                                    foreach(var pj in dbo.PizzaJunction2.ToList()){
+                                        if(pj.PizzaID == poj.PizzaID){
+                                            toppings.add(pj.Name);
+                                        }
+                                    
+                                    }
+                                    var tempPizza = new Pizza(toppings);
+                                    tempOrder.orders.add(tempPizza);
+                                }
+
+                                }
                                 //tempStore.orders.Add(o);
+                                */
                             }
                         }
+                    availableStores.Add(tempStore);
+                    }
+
                 
             }  
             if(ModeSwitch() == "store"){
+                
+                var flag = true;
                 Console.WriteLine("selct your store");
+                var inputName =Console.ReadLine();
+                foreach(CL.Store a in availableStores)
+                {
+                    if(a.Name == inputName){
+                        currentStore = a;
+                        flag = false;
+                    }
+                }
+                if(flag)
+                {
+                    currentStore = new CL.Store(inputName);
+                }
+                Console.WriteLine("type sales to see sales");
+                Console.WriteLine("type orders to see orders");
+
+            
 
             }
+
             else{
+
             Console.WriteLine("Please enter username");
             string currentUsername = Console.ReadLine();
-            var user1 = new PizzaStore.Domain.User(currentUsername);
-            var store1 = new PizzaStore.Domain.Store("pizzahut");
+            var currentUser = new PizzaStore.Domain.User(currentUsername);
+            Console.WriteLine("please select a pizza store");
+            foreach(var s in availableStores){
+                Console.WriteLine($"type {s.Name} to select {s.Name} as the resteraunt you want to go to.");
+            }
+            var currentStoreName = Console.ReadLine();
+            currentStore = new CL.Store(currentStoreName);
+            foreach(var s in availableStores){
+                if(s.Name == currentStoreName){
+                    currentStore = s;
+                }
+            }
+            
+            foreach(var u in dbo.User2.ToList()){
+                if(u.Name == currentUsername){
+                    currentUser.Name = currentUsername;
+                    foreach(var oj in dbo.OrderJunction2){
+                        if(oj.UserId == u.UserId){
+                        var tempID = oj.OrderId;
+                        }
+                        foreach(var o in dbo.Order2){
+                            //if(tempID == o.OrderId){
+                                var tempOrder = new CL.Order();
+                                /*
+                                //foreach(var poj in dbo.PizzaOrderJunction2.ToList()){
+                                if(tempID == poj.OrderId){
+                                    List<string> toppings = new List<string>();
+                                    foreach(var pj in dbo.PizzaJunction2.ToList()){
+                                        if(pj.PizzaID == poj.PizzaID){
+                                            toppings.add(pj.Name);
+                                        }
+                                    
+                                    }
+                                    var tempPizza = new Pizza(toppings);
+                                    tempOrder.orders.add(tempPizza);
+                                }
+
+                                }
+                                currentUser.orders.Add(o);
+                                */
+                            }
+                        }
+                }
+            }
+            
+            
             var Starter = new Starter();
-            PizzaStore.Domain.Order cart = Starter.CreateOrder(user1,store1);
+            PizzaStore.Domain.Order cart = Starter.CreateOrder(currentUser,currentStore);
             
             bool flag = true;
             while(flag){
-                flag = newInput(cart,currentUsername);
+                flag = newInput(cart,currentUser);
             }
             }
-            bool newInput(PizzaStore.Domain.Order cart,string currentUsername)
+            bool newInput(CL.Order cart,CL.User currentUser)
             {
              Console.WriteLine("type cheese if you want to add a cheese pizza to the cart");
              Console.WriteLine("type peperoni if you want peperoni");
@@ -84,11 +166,12 @@ namespace PizzaStore.Client
                  break;
 
                  case "past" :
-                 /*var pastCart = SaveManager.Read(currentUser);
-                 foreach(Pizza x in pastCart.pizzas){
-                     Console.WriteLine($"{x.ToString()}");
+                 var pastCart = currentUser;
+                 foreach(CL.Order O in pastCart.orders){
+                     foreach(CL.Pizza p in O.pizzas)
+                     Console.WriteLine($"{p.ToString()}");
                  }
-                 */
+                 
                  break;
 
                  case "cart":
@@ -115,12 +198,12 @@ namespace PizzaStore.Client
                         {
                             var tempName = p.Name;
                             index += 1;
-                            if(tempName == currentUsername)
+                            if(tempName == currentUser.Name)
                             {
                                 dbUser = p;
                             }
                         }
-                        dbUser.Name = currentUsername;
+                        dbUser.Name = currentUser.Name;
                         dbUser.UserId = index+1;
                         dbo.Add(dbUser);
 
