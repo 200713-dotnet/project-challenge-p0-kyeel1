@@ -6,10 +6,9 @@ namespace PizzaStore.Domain
         public string Name{get;}
         public string Description {get;}
 
-        public Crust(string name,string description)
+        public Crust(string name)
         {
             Name = name;
-            Description = description;
         }
         public Crust(){}
         public override string ToString()

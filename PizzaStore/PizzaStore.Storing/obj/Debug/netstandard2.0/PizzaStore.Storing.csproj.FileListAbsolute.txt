@@ -1,0 +1,9 @@
+/home/henry/Documents/Revature/Pro1/project-challenge-p0-kyeel1/PizzaStore/PizzaStore.Storing/bin/Debug/netstandard2.0/PizzaStore.Storing.deps.json
+/home/henry/Documents/Revature/Pro1/project-challenge-p0-kyeel1/PizzaStore/PizzaStore.Storing/bin/Debug/netstandard2.0/PizzaStore.Storing.dll
+/home/henry/Documents/Revature/Pro1/project-challenge-p0-kyeel1/PizzaStore/PizzaStore.Storing/bin/Debug/netstandard2.0/PizzaStore.Storing.pdb
+/home/henry/Documents/Revature/Pro1/project-challenge-p0-kyeel1/PizzaStore/PizzaStore.Storing/obj/Debug/netstandard2.0/PizzaStore.Storing.csprojAssemblyReference.cache
+/home/henry/Documents/Revature/Pro1/project-challenge-p0-kyeel1/PizzaStore/PizzaStore.Storing/obj/Debug/netstandard2.0/PizzaStore.Storing.AssemblyInfoInputs.cache
+/home/henry/Documents/Revature/Pro1/project-challenge-p0-kyeel1/PizzaStore/PizzaStore.Storing/obj/Debug/netstandard2.0/PizzaStore.Storing.AssemblyInfo.cs
+/home/henry/Documents/Revature/Pro1/project-challenge-p0-kyeel1/PizzaStore/PizzaStore.Storing/obj/Debug/netstandard2.0/PizzaStore.Storing.csproj.CoreCompileInputs.cache
+/home/henry/Documents/Revature/Pro1/project-challenge-p0-kyeel1/PizzaStore/PizzaStore.Storing/obj/Debug/netstandard2.0/PizzaStore.Storing.dll
+/home/henry/Documents/Revature/Pro1/project-challenge-p0-kyeel1/PizzaStore/PizzaStore.Storing/obj/Debug/netstandard2.0/PizzaStore.Storing.pdb

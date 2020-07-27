@@ -10,6 +10,10 @@ namespace PizzaStore.Domain
         {
             Content = new List<string>();
         }
+        public Toppings(List<string> x)
+        {
+            Content = x;
+        }
         public void addTopping(string topping)
         {
             Content.Add(topping);

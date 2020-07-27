@@ -1,6 +1,9 @@
-﻿using System;
+﻿
+ 
+using System;
 using System.Collections.Generic;
 using PizzaStore.Domain;
+
 namespace PizzaStore.Client
 {
     class Program
@@ -9,18 +12,18 @@ namespace PizzaStore.Client
         {
             Console.WriteLine("Please enter your name");
             string currentUser = Console.ReadLine();
-            var name = new Name(currentUser);
-            var user1 = new User(name);
-            var store1 = new Store("PizzaStore","a modest pizza store in downtown Fargo");
+            var user1 = new User(currentUser);
+            var store1 = new Store("pizzahut");
             var Starter = new Starter();
             Order cart = Starter.CreateOrder(user1,store1);
             bool flag = true;
             while(flag){
-                flag = newInput();
+                flag = newInput(cart);
             }
-            bool newInput()
+
+            bool newInput(Order cart)
             {
-             Console.WriteLine("type cheese if you want top add a cheese pizza to the cart");
+             Console.WriteLine("type cheese if you want to add a cheese pizza to the cart");
              Console.WriteLine("type peperoni if you want peperoni");
              Console.WriteLine("type sausage if you want suasage");
              Console.WriteLine("type custom if you want a custom pizza");
@@ -29,31 +32,37 @@ namespace PizzaStore.Client
              Console.WriteLine("type total to see your total");
              Console.WriteLine("press enter if you want to exit");
              var temp = new PizzaStore.Client.Starter();
+             Pizza tempPizza;
                 switch(Console.ReadLine())
                 {
                  case "cheese":
-                 DefaultPizza("cheese");
+                 tempPizza = new Pizza(GetCrust(),GetSize(),new Toppings(new List<string>{"Cheese"}),10.00);
+                 cart.pizzas.Add(tempPizza);
                  break;
 
-                 case "pepperoni" :
-                 DefaultPizza("pepperoni");
+                 case "pepperoni":
+                 tempPizza = new Pizza(GetCrust(),GetSize(),new Toppings(new List<string>{"Pepperoni"}),13.00);
+                 cart.pizzas.Add(tempPizza);
                  break;
 
                  case "suasage": 
-                 DefaultPizza("suasage");
+                 tempPizza = new Pizza(GetCrust(),GetSize(),new Toppings(new List<string>{"Suasage"}),14.00);
+                 cart.pizzas.Add(tempPizza);
                  break;
 
                  case "custom" :
-                 Custom();
+                 tempPizza = new Pizza(GetCrust(),GetSize(),custom(),16.00);
+                 cart.pizzas.Add(tempPizza);
                  break;
-                /*
+
                  case "past" :
-                 var pastCart = SaveManager.Read(currentUser);
+                 /*var pastCart = SaveManager.Read(currentUser);
                  foreach(Pizza x in pastCart.pizzas){
                      Console.WriteLine($"{x.ToString()}");
                  }
+                 */
                  break;
-                */
+
                  case "cart":
                  foreach(Pizza x in cart.pizzas){
                      Console.WriteLine($"{x.ToString()}");
@@ -63,25 +72,25 @@ namespace PizzaStore.Client
                  case "Total":
                  double tempTotal = 0;
                  foreach(Pizza x in cart.pizzas){
-                     tempTotal+= x.Cost;
+                     tempTotal+= x.Price;
                  }
                  Console.WriteLine($"your total is: {tempTotal}");
                  break;
 
-                 default://make it post to sql server here
+                 default:
+                //SaveManager.Write(cart,currentUser);
                  return false;
                 }
              return true;//returns the result of the operation
             
             }
-
-            void Custom(){
+            Toppings custom(){
                 bool flag = true;
-                Toppings toppings = new Toppings();
-                int[] tFlag = {0,0,0};
-
+                List<string> customPizza = new List<string>();
+                int customIndex=0;
                 while(flag){
-                Console.WriteLine("type cheese if you want top add extra cheese");
+                Console.WriteLine("you may only add three toppingsto your pizza");
+                Console.WriteLine("type cheese if you want top add a cheese pizza to the cart");
                 Console.WriteLine("type peperoni if you want peperoni");
                 Console.WriteLine("type sausage if you want suasage");
                 Console.WriteLine("press enter if you want to exit");
@@ -89,90 +98,81 @@ namespace PizzaStore.Client
                 switch(Console.ReadLine())
                 {
                  case "cheese":
-                 if(tFlag[0]<2){
-                 toppings.addTopping("Cheese");
-                 }
-                 else
-                 Console.WriteLine("cant add any more cheese");
+                 customPizza.Add("cheese");
                  break;
 
                  case "pepperoni" :
-                 if(tFlag[1]<2){
-                 toppings.addTopping("Pepperoni");
-                 tFlag[1]+= 1;
-                 }
-                 else
-                 Console.WriteLine("cant add any more pepperoni");
+                 customPizza.Add("Pepperoni");
                  break;
 
                  case "suasage": 
-                 if(tFlag[2]<2){
-                 toppings.addTopping("Suasage");
-                 tFlag[2]+= 1;
-                 }
-                 else
-                 Console.WriteLine("cant add any more suasage");
+                 customPizza.Add("suasage");
                  break;
 
                  default:
                  flag = false;
                  break;
                 }
-
-                cart.createPizza(WhatCrust(),WhatSize(),toppings);
-            }
-            }
-
-            void DefaultPizza(string type)
-            {
-                
-                Toppings toppings = new Toppings();
-                
-                switch(type)
-                {
-                    case "cheese":
-                    toppings.addTopping("cheese");
-                    break;
-
-                    case "pepperoni":
-                    toppings.addTopping("cheese");
-                    toppings.addTopping("pepperoni");
-                    break;
-
-                    case "sausuage":
-                    toppings.addTopping("cheese");
-                    toppings.addTopping("suasage");
-                    break;
+                if(customIndex ==3)
+                 flag = false;
                 }
-
-                cart.createPizza(WhatCrust(),WhatSize(),toppings);
-
+                return new Toppings(customPizza);
             }
-            Size WhatSize()
+            Crust GetCrust()
             {
-                Console.WriteLine("what size do you want this pizza: /n Small,Medium,Large,Extra-Large");
-                var input = Console.ReadLine();
-                return new Size(input);
-            }
-            Crust WhatCrust()
-            {
-                Console.WriteLine("what crust do you want on the pizza: /n thick,thin,garlic");
-                var input = Console.ReadLine();
-                switch(input)
+                Console.WriteLine("type thin if you want a thin crust");
+                Console.WriteLine("type thick if you want a thick crust");
+                Console.WriteLine("type garlic if you want a garlic crust");
+                switch(Console.ReadLine())
                 {
-                    case "thick":
-                    return new Crust("Thick","a thicker crust");
+                 case "thin":
+                 return new Crust("thin");
+                 
 
-                    case "thin":
-                    return new Crust("Thin","a thinner crust");
+                 case "thick" :
+                 return new Crust("thick");
+                 
 
-                    case "garlic":
-                    return new Crust("Garlic","a crust made with garlic");
+                 case "garlic": 
+                 return new Crust("garlic");
+                 
+                 default:
+                 return GetCrust();
+                }
+            }
+            Size GetSize()
+            {
+                Console.WriteLine("type small or 12  if you want a small pizza");
+                Console.WriteLine("type medium or 14 if you want a medium pizza");
+                Console.WriteLine("type large  or 16 if you want a large pizza");
+                Console.WriteLine("type 21 or extralarge if you want a large pizza");
+                switch(Console.ReadLine())
+                {
+                 case "small":
+                 case "12":
+                 return new Size("small");
+                 
 
-                    default:
-                    return new Crust();
+                 case "medium" :
+                 case "14":
+                 return new Size("medium");
+                 
+
+                 case "large" :
+                 case "16":
+                 return new Size("large");
+                 
+
+                 case "extralarge" :
+                 case "21":
+                 return new Size("extralarge");
+                 
+
+                 default:
+                 return GetSize();
                 }
             }
         }
     }
 }
+

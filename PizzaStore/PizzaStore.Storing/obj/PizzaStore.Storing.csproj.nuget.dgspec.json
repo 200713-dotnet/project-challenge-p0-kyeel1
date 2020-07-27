@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/home/henry/Documents/Revature/Week_2/PizzaStore/PizzaStore.Storing/PizzaStore.Storing.csproj": {}
+    "/home/henry/Documents/Revature/Pro1/project-challenge-p0-kyeel1/PizzaStore/PizzaStore.Storing/PizzaStore.Storing.csproj": {}
   },
   "projects": {
-    "/home/henry/Documents/Revature/Week_2/PizzaStore/PizzaStore.Storing/PizzaStore.Storing.csproj": {
+    "/home/henry/Documents/Revature/Pro1/project-challenge-p0-kyeel1/PizzaStore/PizzaStore.Storing/PizzaStore.Storing.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/henry/Documents/Revature/Week_2/PizzaStore/PizzaStore.Storing/PizzaStore.Storing.csproj",
+        "projectUniqueName": "/home/henry/Documents/Revature/Pro1/project-challenge-p0-kyeel1/PizzaStore/PizzaStore.Storing/PizzaStore.Storing.csproj",
         "projectName": "PizzaStore.Storing",
-        "projectPath": "/home/henry/Documents/Revature/Week_2/PizzaStore/PizzaStore.Storing/PizzaStore.Storing.csproj",
+        "projectPath": "/home/henry/Documents/Revature/Pro1/project-challenge-p0-kyeel1/PizzaStore/PizzaStore.Storing/PizzaStore.Storing.csproj",
         "packagesPath": "/home/henry/.nuget/packages/",
-        "outputPath": "/home/henry/Documents/Revature/Week_2/PizzaStore/PizzaStore.Storing/obj/",
+        "outputPath": "/home/henry/Documents/Revature/Pro1/project-challenge-p0-kyeel1/PizzaStore/PizzaStore.Storing/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/home/henry/.nuget/NuGet/NuGet.Config"
@@ -41,6 +41,16 @@
               "target": "Package",
               "version": "[2.0.3, )",
               "autoReferenced": true
+            },
+            "microsoft.entityframeworkcore.design": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[3.1.6, )"
+            },
+            "microsoft.entityframeworkcore.sqlserver": {
+              "target": "Package",
+              "version": "[3.1.6, )"
             }
           },
           "imports": [

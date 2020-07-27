@@ -7,9 +7,8 @@ namespace PizzaStore.Domain
         public List<Order> orders{get;}
         
         public string Description{get;}
-        public Store(string description,string name){
+        public Store(string name){
             orders = new List<Order>();
-            Description = description;
             Name = name;
         }
         public Order CreateOrder()
