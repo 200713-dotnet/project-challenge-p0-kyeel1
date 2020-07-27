@@ -18,6 +18,8 @@ namespace PizzaStore.Storing
         public virtual DbSet<Crust2> Crust2 { get; set; }
         public virtual DbSet<Order2> Order2 { get; set; }
         public virtual DbSet<OrderJunction2> OrderJunction2 { get; set; }
+        public virtual DbSet<Pizza2> Pizza2 { get; set; }
+        public virtual DbSet<PizzaJunction2> PizzaJunction2 { get; set; }
         public virtual DbSet<Size2> Size2 { get; set; }
         public virtual DbSet<Store2> Store2 { get; set; }
         public virtual DbSet<Toppings2> Toppings2 { get; set; }
@@ -36,7 +38,10 @@ namespace PizzaStore.Storing
         {
             modelBuilder.Entity<Crust2>(entity =>
             {
-                entity.HasNoKey();
+                entity.HasKey(e => e.CrustId)
+                    .HasName("PK_CrustId");
+
+                entity.Property(e => e.CrustId).ValueGeneratedNever();
 
                 entity.Property(e => e.Active)
                     .IsRequired()
@@ -74,6 +79,58 @@ namespace PizzaStore.Storing
                 entity.Property(e => e.OrderJunctionId).ValueGeneratedNever();
 
                 entity.Property(e => e.DateModified).HasColumnType("datetime2(0)");
+            });
+
+            modelBuilder.Entity<Pizza2>(entity =>
+            {
+                entity.HasKey(e => e.PizzaId)
+                    .HasName("PK_Pizza_PizzaId");
+
+                entity.Property(e => e.PizzaId).ValueGeneratedNever();
+
+                entity.Property(e => e.Active)
+                    .IsRequired()
+                    .HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.DateModified).HasColumnType("datetime2(0)");
+
+                entity.Property(e => e.Name)
+                    .IsRequired()
+                    .HasMaxLength(50);
+
+                entity.HasOne(d => d.Crust)
+                    .WithMany(p => p.Pizza2)
+                    .HasForeignKey(d => d.CrustId)
+                    .HasConstraintName("FK_Pizza_CrustId");
+
+                entity.HasOne(d => d.Size)
+                    .WithMany(p => p.Pizza2)
+                    .HasForeignKey(d => d.SizeId)
+                    .HasConstraintName("FK_Pizza_SizeId");
+            });
+
+            modelBuilder.Entity<PizzaJunction2>(entity =>
+            {
+                entity.HasKey(e => e.JunctionId)
+                    .HasName("PK_Junction");
+
+                entity.Property(e => e.JunctionId)
+                    .HasColumnName("junctionId")
+                    .ValueGeneratedNever();
+
+                entity.Property(e => e.Active).HasColumnName("active");
+
+                entity.HasOne(d => d.Pizza)
+                    .WithMany(p => p.PizzaJunction2)
+                    .HasForeignKey(d => d.PizzaId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_junctionPizza");
+
+                entity.HasOne(d => d.Toppings)
+                    .WithMany(p => p.PizzaJunction2)
+                    .HasForeignKey(d => d.ToppingsId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_junctionToppings");
             });
 
             modelBuilder.Entity<Size2>(entity =>

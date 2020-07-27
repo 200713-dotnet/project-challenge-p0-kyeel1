@@ -24,15 +24,18 @@ namespace PizzaStore.Client
                         var tempID = oj.OrderId;
                         }
                         foreach(var o in dbo.Order2){
-                            //if(tempID == o.OrderId){
+                            if(tempID == o.OrderId){
                                 var tempOrder = new CL.Order();
-                                /*
-                                //foreach(var poj in dbo.PizzaOrderJunction2.ToList()){
+                                
+                                foreach(var poj in dbo. .ToList()){
                                 if(tempID == poj.OrderId){
                                     List<string> toppings = new List<string>();
                                     foreach(var pj in dbo.PizzaJunction2.ToList()){
-                                        if(pj.PizzaID == poj.PizzaID){
-                                            toppings.add(pj.Name);
+                                        if(pj.PizzaId == poj.PizzaID){
+                                            foreach(var t in dbo.Toppings2.ToList()){
+                                            if()
+                                            toppings.add(t.name);
+                                            }
                                         }
                                     
                                     }
@@ -41,8 +44,8 @@ namespace PizzaStore.Client
                                 }
 
                                 }
-                                //tempStore.orders.Add(o);
-                                */
+                                tempStore.orders.Add(o);
+                                
                             }
                         }
                     availableStores.Add(tempStore);
