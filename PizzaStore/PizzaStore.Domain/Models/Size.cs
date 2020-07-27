@@ -4,7 +4,7 @@ namespace PizzaStore.Domain
     {
         public int Diameter{get;}
         public string size{get;}
-
+        public int Price{get;set;}
         public Size(int diameter,string x)
         {
             Diameter = diameter;
@@ -19,21 +19,26 @@ namespace PizzaStore.Domain
         {
             size = x;
             Diameter = GetDiameter(x);
+            
         }
         public string GetSize(int diameter)
         {
             switch(diameter)
             {
                 case 12:
+                Price = 10;
                 return "Small";
                 
                 case 14:
+                Price = 12;
                 return "Medium";
 
                 case 16:
+                Price = 14;
                 return "Large";
 
                 case 21:
+                Price = 16;
                 return "Extra-Large";
 
                 default:

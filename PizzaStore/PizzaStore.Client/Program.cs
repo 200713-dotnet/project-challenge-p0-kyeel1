@@ -68,6 +68,10 @@ namespace PizzaStore.Client
                 }
                 Console.WriteLine("type sales to see sales");
                 Console.WriteLine("type orders to see orders");
+                switch(Console.ReadLine()){
+                
+                
+                }
 
             
 
@@ -140,28 +144,29 @@ namespace PizzaStore.Client
              Console.WriteLine("type cart to display the cart");
              Console.WriteLine("type past to display the past orders");
              Console.WriteLine("type total to see your total");
+             Console.WriteLine("type delete to delete a pizza");
              Console.WriteLine("press enter if you want to exit");
              var temp = new PizzaStore.Client.Starter();
              Pizza tempPizza;
                 switch(Console.ReadLine())
                 {
                  case "cheese":
-                 tempPizza = new Pizza(GetCrust(),GetSize(),new PizzaStore.Domain.Toppings(new List<string>{"Cheese"}),10.00);
+                 tempPizza = new Pizza(GetCrust(),GetSize(),new PizzaStore.Domain.Toppings(new List<string>{"Cheese"},1));
                  cart.pizzas.Add(tempPizza);
                  break;
 
                  case "pepperoni":
-                 tempPizza = new Pizza(GetCrust(),GetSize(),new PizzaStore.Domain.Toppings(new List<string>{"Pepperoni"}),13.00);
+                 tempPizza = new Pizza(GetCrust(),GetSize(),new PizzaStore.Domain.Toppings(new List<string>{"Pepperoni"},1));
                  cart.pizzas.Add(tempPizza);
                  break;
 
                  case "suasage": 
-                 tempPizza = new Pizza(GetCrust(),GetSize(),new PizzaStore.Domain.Toppings(new List<string>{"Suasage"}),14.00);
+                 tempPizza = new Pizza(GetCrust(),GetSize(),new PizzaStore.Domain.Toppings(new List<string>{"Suasage"},1));
                  cart.pizzas.Add(tempPizza);
                  break;
 
                  case "custom" :
-                 tempPizza = new Pizza(GetCrust(),GetSize(),custom(),16.00);
+                 tempPizza = new Pizza(GetCrust(),GetSize(),custom());
                  cart.pizzas.Add(tempPizza);
                  break;
 
@@ -171,7 +176,6 @@ namespace PizzaStore.Client
                      foreach(CL.Pizza p in O.pizzas)
                      Console.WriteLine($"{p.ToString()}");
                  }
-                 
                  break;
 
                  case "cart":
@@ -186,6 +190,10 @@ namespace PizzaStore.Client
                      tempTotal+= x.Price;
                  }
                  Console.WriteLine($"your total is: {tempTotal}");
+                 break;
+                
+                 case "delete":
+                 deletePizza(cart);
                  break;
 
                  default:
@@ -209,28 +217,19 @@ namespace PizzaStore.Client
 
                         
                     }
-                    
-                    
-                    
-                        
-                    
-                    
+
                     DB.Order2 dbCart = new DB.Order2();
-                    
-                    
-
-
                  return false;
                 }
              return true;//returns the result of the operation
             
             }
-            PizzaStore.Domain.Toppings custom(){
+            CL.Toppings custom(){
                 bool flag = true;
                 List<string> customPizza = new List<string>();
                 int customIndex=0;
                 while(flag){
-                Console.WriteLine("you may only add three toppingsto your pizza");
+                Console.WriteLine("you may only add four toppingsto your pizza");
                 Console.WriteLine("type cheese if you want top add a cheese pizza to the cart");
                 Console.WriteLine("type peperoni if you want peperoni");
                 Console.WriteLine("type sausage if you want suasage");
@@ -240,24 +239,27 @@ namespace PizzaStore.Client
                 {
                  case "cheese":
                  customPizza.Add("cheese");
+                 customIndex+=1;
                  break;
 
                  case "pepperoni" :
                  customPizza.Add("Pepperoni");
+                 customIndex+=1;
                  break;
 
                  case "suasage": 
                  customPizza.Add("suasage");
+                 customIndex+=1;
                  break;
 
                  default:
                  flag = false;
                  break;
                 }
-                if(customIndex ==3)
+                if(customIndex ==4)
                  flag = false;
                 }
-                return new PizzaStore.Domain.Toppings(customPizza);
+                return new PizzaStore.Domain.Toppings(customPizza,2);
             }
             PizzaStore.Domain.Crust GetCrust()
             {
@@ -267,15 +269,15 @@ namespace PizzaStore.Client
                 switch(Console.ReadLine())
                 {
                  case "thin":
-                 return new PizzaStore.Domain.Crust("thin");
+                 return new CL.Crust("thin",1);
                  
 
                  case "thick" :
-                 return new PizzaStore.Domain.Crust("thick");
+                 return new CL.Crust("thick",2);
                  
 
                  case "garlic": 
-                 return new PizzaStore.Domain.Crust("garlic");
+                 return new CL.Crust("garlic",3);
                  
                  default:
                  return GetCrust();
@@ -291,22 +293,22 @@ namespace PizzaStore.Client
                 {
                  case "small":
                  case "12":
-                 return new PizzaStore.Domain.Size("small");
+                 return new CL.Size("small");
                  
 
                  case "medium" :
                  case "14":
-                 return new PizzaStore.Domain.Size("medium");
+                 return new CL.Size("medium");
                  
 
                  case "large" :
                  case "16":
-                 return new PizzaStore.Domain.Size("large");
+                 return new CL.Size("large");
                  
 
                  case "extralarge" :
                  case "21":
-                 return new PizzaStore.Domain.Size("extralarge");
+                 return new CL.Size("extralarge");
                  
 
                  default:
@@ -328,6 +330,21 @@ namespace PizzaStore.Client
                     return ModeSwitch();
 
                 }
+            }
+            void deletePizza(CL.Order cart)
+            {
+                
+                foreach(Pizza p in cart.pizzas)
+                {
+                    Console.WriteLine($" {p.ToString()}");
+                    Console.WriteLine("delete this pizza(y/n)?");
+                    if(Console.ReadLine() == "y"){
+                        cart.pizzas.Remove(p);
+                    }
+
+                }
+                
+                
             }
         }
     }

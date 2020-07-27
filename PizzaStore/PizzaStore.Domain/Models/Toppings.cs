@@ -5,14 +5,16 @@ namespace PizzaStore.Domain
     public class Toppings
     {
         public List<string> Content{get;}
-
-        public Toppings()
+        public int Price{get;}
+        public Toppings(int price)
         {
             Content = new List<string>();
+            Price = price;
         }
-        public Toppings(List<string> x)
+        public Toppings(List<string> x,int price)
         {
             Content = x;
+            Price = price;
         }
         public void addTopping(string topping)
         {

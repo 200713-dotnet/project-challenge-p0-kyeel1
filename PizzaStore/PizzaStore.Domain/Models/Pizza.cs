@@ -6,13 +6,13 @@ namespace PizzaStore.Domain
   public Size Size {get; }
   public Crust Crust {get; }
   public Toppings Toppings {get;}
-  public double Price {get;}
+  public int Price {get;}
 
- public Pizza(Crust crust,Size size, Toppings toppings,double price){
+ public Pizza(Crust crust,Size size, Toppings toppings){
    Crust = crust;
    Size = size;
    Toppings = toppings;
-   Price = price;
+   Price = crust.Price + size.Price + toppings.Price;
 
 
  }
@@ -20,6 +20,7 @@ namespace PizzaStore.Domain
  {
   return $"size:{Size} crust:{Crust} toppings: {Toppings} price: {Price}";
  }
+ 
 public Pizza()
 {
 
