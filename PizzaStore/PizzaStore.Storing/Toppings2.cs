@@ -11,6 +11,7 @@ namespace PizzaStore.Storing
         }
 
         public int ToppingsId { get; set; }
+        public string Name { get; set; }
         public bool? Active { get; set; }
         public bool IsValid { get; set; }
         public DateTime DateModified { get; set; }

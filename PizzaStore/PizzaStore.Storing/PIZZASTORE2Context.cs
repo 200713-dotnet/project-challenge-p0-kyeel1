@@ -20,6 +20,7 @@ namespace PizzaStore.Storing
         public virtual DbSet<OrderJunction2> OrderJunction2 { get; set; }
         public virtual DbSet<Pizza2> Pizza2 { get; set; }
         public virtual DbSet<PizzaJunction2> PizzaJunction2 { get; set; }
+        public virtual DbSet<PizzaOrderJunction2> PizzaOrderJunction2 { get; set; }
         public virtual DbSet<Size2> Size2 { get; set; }
         public virtual DbSet<Store2> Store2 { get; set; }
         public virtual DbSet<Toppings2> Toppings2 { get; set; }
@@ -111,7 +112,7 @@ namespace PizzaStore.Storing
             modelBuilder.Entity<PizzaJunction2>(entity =>
             {
                 entity.HasKey(e => e.JunctionId)
-                    .HasName("PK_Junction");
+                    .HasName("PK_PizzaJunction");
 
                 entity.Property(e => e.JunctionId)
                     .HasColumnName("junctionId")
@@ -130,6 +131,28 @@ namespace PizzaStore.Storing
                     .HasForeignKey(d => d.ToppingsId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_junctionToppings");
+            });
+
+            modelBuilder.Entity<PizzaOrderJunction2>(entity =>
+            {
+                entity.HasKey(e => e.PizzaOrderjunctionId)
+                    .HasName("PK_PizzaOrderJunction");
+
+                entity.Property(e => e.PizzaOrderjunctionId).ValueGeneratedNever();
+
+                entity.Property(e => e.Active).HasColumnName("active");
+
+                entity.HasOne(d => d.Order)
+                    .WithMany(p => p.PizzaOrderJunction2)
+                    .HasForeignKey(d => d.OrderId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_junctionOrder");
+
+                entity.HasOne(d => d.Pizza)
+                    .WithMany(p => p.PizzaOrderJunction2)
+                    .HasForeignKey(d => d.PizzaId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_junctionPizzaOrder");
             });
 
             modelBuilder.Entity<Size2>(entity =>
@@ -184,6 +207,8 @@ namespace PizzaStore.Storing
                     .HasDefaultValueSql("((1))");
 
                 entity.Property(e => e.DateModified).HasColumnType("datetime2(0)");
+
+                entity.Property(e => e.Name).HasMaxLength(250);
             });
 
             modelBuilder.Entity<User2>(entity =>
