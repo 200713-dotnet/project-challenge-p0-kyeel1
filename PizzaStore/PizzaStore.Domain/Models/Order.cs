@@ -5,8 +5,8 @@ namespace PizzaStore.Domain
     {
         public List<Pizza> pizzas = new List<Pizza>();
 
-        public void createPizza(Crust crust, Size size, Toppings toppings){
-            pizzas.Add(new Pizza(crust,size,toppings));
+        public void createPizza(Crust crust, Size size, Toppings toppings,string name){
+            pizzas.Add(new Pizza(crust,size,toppings,name));
         }
         public override string ToString()
         {

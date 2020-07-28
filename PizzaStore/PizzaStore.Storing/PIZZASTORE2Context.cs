@@ -30,6 +30,7 @@ namespace PizzaStore.Storing
         {
             if (!optionsBuilder.IsConfigured)
             {
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
                 optionsBuilder.UseSqlServer("server=localhost;database=PIZZASTORE2;user id=sa;password=Dragoon123");
             }
         }
@@ -41,8 +42,6 @@ namespace PizzaStore.Storing
                 entity.HasKey(e => e.CrustId)
                     .HasName("PK_CrustId");
 
-                entity.Property(e => e.CrustId).ValueGeneratedNever();
-
                 entity.Property(e => e.Active)
                     .IsRequired()
                     .HasDefaultValueSql("((1))");
@@ -50,7 +49,6 @@ namespace PizzaStore.Storing
                 entity.Property(e => e.DateModified).HasColumnType("datetime2(0)");
 
                 entity.Property(e => e.Description)
-                    .IsRequired()
                     .HasColumnName("description")
                     .HasMaxLength(250);
 
@@ -66,8 +64,6 @@ namespace PizzaStore.Storing
 
                 entity.ToTable("ORDER2");
 
-                entity.Property(e => e.OrderId).ValueGeneratedNever();
-
                 entity.Property(e => e.DateModified).HasColumnType("datetime2(0)");
             });
 
@@ -76,17 +72,23 @@ namespace PizzaStore.Storing
                 entity.HasKey(e => e.OrderJunctionId)
                     .HasName("PK_OrderJunctionID");
 
-                entity.Property(e => e.OrderJunctionId).ValueGeneratedNever();
-
                 entity.Property(e => e.DateModified).HasColumnType("datetime2(0)");
+
+                entity.HasOne(d => d.Order)
+                    .WithMany(p => p.OrderJunction2)
+                    .HasForeignKey(d => d.OrderId)
+                    .HasConstraintName("FK_junctionOrder2");
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.OrderJunction2)
+                    .HasForeignKey(d => d.UserId)
+                    .HasConstraintName("FK_junctionUser");
             });
 
             modelBuilder.Entity<Pizza2>(entity =>
             {
                 entity.HasKey(e => e.PizzaId)
                     .HasName("PK_Pizza_PizzaId");
-
-                entity.Property(e => e.PizzaId).ValueGeneratedNever();
 
                 entity.Property(e => e.Active)
                     .IsRequired()
@@ -114,9 +116,7 @@ namespace PizzaStore.Storing
                 entity.HasKey(e => e.JunctionId)
                     .HasName("PK_PizzaJunction");
 
-                entity.Property(e => e.JunctionId)
-                    .HasColumnName("junctionId")
-                    .ValueGeneratedNever();
+                entity.Property(e => e.JunctionId).HasColumnName("junctionId");
 
                 entity.Property(e => e.Active).HasColumnName("active");
 
@@ -138,8 +138,6 @@ namespace PizzaStore.Storing
                 entity.HasKey(e => e.PizzaOrderjunctionId)
                     .HasName("PK_PizzaOrderJunction");
 
-                entity.Property(e => e.PizzaOrderjunctionId).ValueGeneratedNever();
-
                 entity.Property(e => e.Active).HasColumnName("active");
 
                 entity.HasOne(d => d.Order)
@@ -160,15 +158,11 @@ namespace PizzaStore.Storing
                 entity.HasKey(e => e.SizeId)
                     .HasName("PK_Pizza_SizeId");
 
-                entity.Property(e => e.SizeId).ValueGeneratedNever();
-
                 entity.Property(e => e.Active)
                     .IsRequired()
                     .HasDefaultValueSql("((1))");
 
                 entity.Property(e => e.DateModified).HasColumnType("datetime2(0)");
-
-                entity.Property(e => e.Diameter).HasColumnName("diameter");
 
                 entity.Property(e => e.Size)
                     .IsRequired()
@@ -183,10 +177,7 @@ namespace PizzaStore.Storing
 
                 entity.ToTable("STORE2");
 
-                entity.Property(e => e.StoreId).ValueGeneratedNever();
-
                 entity.Property(e => e.Description)
-                    .IsRequired()
                     .HasColumnName("description")
                     .HasMaxLength(250);
 
@@ -199,8 +190,6 @@ namespace PizzaStore.Storing
             {
                 entity.HasKey(e => e.ToppingsId)
                     .HasName("PK_Toppings_ToppingId");
-
-                entity.Property(e => e.ToppingsId).ValueGeneratedNever();
 
                 entity.Property(e => e.Active)
                     .IsRequired()
@@ -217,8 +206,6 @@ namespace PizzaStore.Storing
                     .HasName("PK_UserID");
 
                 entity.ToTable("USER2");
-
-                entity.Property(e => e.UserId).ValueGeneratedNever();
 
                 entity.Property(e => e.DateModified).HasColumnType("datetime2(0)");
 

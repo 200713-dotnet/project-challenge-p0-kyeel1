@@ -13,7 +13,6 @@ namespace PizzaStore.Storing
         public int SizeId { get; set; }
         public bool? Active { get; set; }
         public string Size { get; set; }
-        public int Diameter { get; set; }
         public bool IsValid { get; set; }
         public DateTime DateModified { get; set; }
 

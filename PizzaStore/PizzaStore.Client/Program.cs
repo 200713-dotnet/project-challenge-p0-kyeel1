@@ -14,7 +14,7 @@ namespace PizzaStore.Client
         {
             string ModeSwitch()
             {
-                Console.WriteLine("please enter store if yyou wish to continue as as store or user to continue as a user");
+                Console.WriteLine("please enter store if you wish to continue as as store or user to continue as a user");
                 switch (Console.ReadLine())
                 {
                     case "store":
@@ -67,12 +67,14 @@ namespace PizzaStore.Client
                                                 }
 
                                             }
+                                            var pizzaName = "";
                                             DB.Crust2 dbCrust = new Crust2();
                                             DB.Size2 dbSize = new Size2();
                                             foreach (var p in dbo.Pizza2)
                                             {
                                                 if (p.PizzaId == poj.PizzaId)
                                                 {
+                                                    pizzaName = p.Name;
                                                     foreach (var c in dbo.Crust2)
                                                     {
                                                         if (c.CrustId == p.CrustId)
@@ -92,7 +94,7 @@ namespace PizzaStore.Client
                                                 }
                                             }
 
-                                            var tempPizza = new Pizza(new CL.Crust(dbCrust.Name), new CL.Size(dbSize.Size), new CL.Toppings(toppings));
+                                            var tempPizza = new Pizza(new CL.Crust(dbCrust.Name), new CL.Size(dbSize.Size), new CL.Toppings(toppings), pizzaName);
                                             tempOrder.pizzas.Add(tempPizza);
 
                                         }
@@ -127,11 +129,18 @@ namespace PizzaStore.Client
                 if (flag)
                 {
                     currentStore = new CL.Store(inputName);
+                    DB.Store2 dbStore = new Store2();
+                    dbStore.Name = inputName;
+                    dbo.Store2.Add(dbStore);
+                    dbo.SaveChanges();
                 }
                 Console.WriteLine("type sales to see sales");
                 Console.WriteLine("type orders to see orders");
+                Console.WriteLine("press enter top exit");
                 switch (Console.ReadLine())
                 {
+                    default:
+                    break;
                 }
             }
 
@@ -193,12 +202,14 @@ namespace PizzaStore.Client
                                                     }
 
                                                 }
+                                                var pizzaName = "";
                                                 DB.Crust2 dbCrust = new Crust2();
                                                 DB.Size2 dbSize = new Size2();
                                                 foreach (var p in dbo.Pizza2)
                                                 {
                                                     if (p.PizzaId == poj.PizzaId)
                                                     {
+                                                        pizzaName = p.Name;
                                                         foreach (var c in dbo.Crust2)
                                                         {
                                                             if (c.CrustId == p.CrustId)
@@ -218,7 +229,7 @@ namespace PizzaStore.Client
                                                     }
                                                 }
 
-                                                var tempPizza = new Pizza(new CL.Crust(dbCrust.Name), new CL.Size(dbSize.Size), new CL.Toppings(toppings));
+                                                var tempPizza = new Pizza(new CL.Crust(dbCrust.Name), new CL.Size(dbSize.Size), new CL.Toppings(toppings), pizzaName);
                                                 tempOrder.pizzas.Add(tempPizza);
                                             }
 
@@ -229,6 +240,8 @@ namespace PizzaStore.Client
                                 }
                             }
                         }
+                    }
+                }
 
 
                         var Starter = new Starter();
@@ -237,10 +250,10 @@ namespace PizzaStore.Client
                         bool flag = true;
                         while (flag)
                         {
-                            flag = newInput(cart, currentUser);
+                            flag = newInput(cart, currentUser,currentStoreName);
                         }
                     }
-                    bool newInput(CL.Order cart, CL.User currentUser)
+                    bool newInput(CL.Order cart, CL.User currentUser,string currentStoreName)
                     {
                         Console.WriteLine("type cheese if you want to add a cheese pizza to the cart");
                         Console.WriteLine("type peperoni if you want peperoni");
@@ -256,22 +269,22 @@ namespace PizzaStore.Client
                         switch (Console.ReadLine())
                         {
                             case "cheese":
-                                tempPizza = new Pizza(GetCrust(), GetSize(), new CL.Toppings(new List<string> { "Cheese" }));
+                                tempPizza = new Pizza(GetCrust(), GetSize(), new CL.Toppings(new List<string> { "Cheese" }), "cheese");
                                 cart.pizzas.Add(tempPizza);
                                 break;
 
                             case "pepperoni":
-                                tempPizza = new Pizza(GetCrust(), GetSize(), new CL.Toppings(new List<string> { "Pepperoni" }));
+                                tempPizza = new Pizza(GetCrust(), GetSize(), new CL.Toppings(new List<string> { "Pepperoni" }), "pepperoni");
                                 cart.pizzas.Add(tempPizza);
                                 break;
 
                             case "suasage":
-                                tempPizza = new Pizza(GetCrust(), GetSize(), new CL.Toppings(new List<string> { "Suasage" }));
+                                tempPizza = new Pizza(GetCrust(), GetSize(), new CL.Toppings(new List<string> { "Suasage" }), "suasage");
                                 cart.pizzas.Add(tempPizza);
                                 break;
 
                             case "custom":
-                                tempPizza = new Pizza(GetCrust(), GetSize(), custom());
+                                tempPizza = new Pizza(GetCrust(), GetSize(), custom(), "custom");
                                 cart.pizzas.Add(tempPizza);
                                 break;
 
@@ -291,7 +304,7 @@ namespace PizzaStore.Client
                                 }
                                 break;
 
-                            case "Total":
+                            case "total":
                                 double tempTotal = 0;
                                 foreach (Pizza x in cart.pizzas)
                                 {
@@ -307,26 +320,123 @@ namespace PizzaStore.Client
                             default:
 
                                 DB.User2 dbUser = new DB.User2();
+                                var userExists = false;
                                 DB.Store2 dbStore = new DB.Store2();
                                 {
-                                    var index = 0;
                                     foreach (var p in dbo.User2.ToList())
                                     {
                                         var tempName = p.Name;
-                                        index += 1;
                                         if (tempName == currentUser.Name)
                                         {
                                             dbUser = p;
+                                            userExists = true;
                                         }
                                     }
+                                    if(!userExists){
                                     dbUser.Name = currentUser.Name;
-                                    dbUser.UserId = index + 1;
                                     dbo.User2.Add(dbUser);
+                                    dbo.SaveChanges();
+                                    }
+                                    
+                                }
+                                foreach (var st in dbo.Store2.ToList())
+                                {
+                                    if (st.Name == currentStoreName)
+                                    {
+                                        dbStore = st;
+                                    }
+                                }
 
+                                DB.Order2 dbCart = new DB.Order2();
+                                dbo.SaveChanges();
+                                dbo.Order2.Add(dbCart);
+                                DB.OrderJunction2 dbOrderJunction = new OrderJunction2();
+                                dbOrderJunction.Order = dbCart;
+                                dbOrderJunction.User = dbUser;
+                                dbo.OrderJunction2.Add(dbOrderJunction);
+                                
+                                foreach (Pizza P in cart.pizzas)
+                                {
+                                    var crustExists = false;
+                                    var sizeExists = false;
+                                    DB.Crust2 tempCrust= new Crust2();
+                                    tempCrust.Name = P.Crust.Name;
+                                    DB.Size2 tempSize = new Size2();
+                                    tempSize.Size = P.Size.size;
+                                    DB.Pizza2 dbPizza = new Pizza2();
+                                    dbPizza.Name = P.Name;
+                                    
+                                    foreach (var c in dbo.Crust2.ToList())
+                                    {
+                                        if (c.Name == P.Crust.Name)
+                                        {
+                                            dbPizza.CrustId = c.CrustId;
+                                            crustExists = true;
+                                        }
+
+                                    }
+                                    if(!crustExists)
+                                    {
+                                        dbPizza.Crust = tempCrust;
+                                    }
+                                     
+                                    foreach (var si in dbo.Size2.ToList())
+                                    {
+                                        if (si.Size == P.Size.size)
+                                        {
+                                            dbPizza.SizeId = si.SizeId;
+                                            sizeExists = true;
+                                        }
+
+                                    }
+                                    if(!sizeExists)
+                                    {
+                                        dbPizza.Size = tempSize;
+                                    }
+                                    dbo.Pizza2.Add(dbPizza);
+                                    dbo.Size2.Add(tempSize);
+                                    dbo.Crust2.Add(tempCrust);
+
+                                    
+                                    
+                                    DB.PizzaOrderJunction2 POJ = new PizzaOrderJunction2();
+                                    POJ.Order = dbCart;
+                                    POJ.Pizza = dbPizza;
+                                    dbo.PizzaOrderJunction2.Add(POJ);
+                                    
+                                    foreach(var t in P.Toppings.Content)
+                                    {
+                                        DB.PizzaJunction2 PJ = new PizzaJunction2();
+                                        PJ.Pizza = dbPizza;
+                                        var toppingExists = false;
+                                        foreach(var dbT in dbo.Toppings2)
+                                        {
+                                            if(dbT.Name == t)
+                                            {
+                                                
+                                                
+                                                PJ.Toppings = dbT;
+                                                
+                                                toppingExists = true;
+
+                                            }
+                                        }
+                                        if(!toppingExists){
+                                            DB.Toppings2 tempToppings = new Toppings2();
+                                            tempToppings.Name = t;
+                                            dbo.Add(tempToppings);
+                                            PJ.Toppings = tempToppings;
+                                        }
+                                        dbo.Add(PJ);
+
+                                    }
+                                    
 
                                 }
                                 
-                                DB.Order2 dbCart = new DB.Order2();
+                                dbo.SaveChanges();
+                                
+                                
 
                                 return false;
                         }
@@ -443,11 +553,11 @@ namespace PizzaStore.Client
 
 
                     }
-                }
+                
             }
         }
     }
-}
+
 
 
 

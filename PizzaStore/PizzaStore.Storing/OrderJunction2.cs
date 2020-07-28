@@ -12,5 +12,8 @@ namespace PizzaStore.Storing
         public bool Active { get; set; }
         public bool IsValid { get; set; }
         public DateTime DateModified { get; set; }
+
+        public virtual Order2 Order { get; set; }
+        public virtual User2 User { get; set; }
     }
 }

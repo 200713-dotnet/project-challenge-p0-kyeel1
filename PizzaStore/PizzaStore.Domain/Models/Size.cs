@@ -27,19 +27,19 @@ namespace PizzaStore.Domain
             {
                 case 12:
                 Price = 10;
-                return "Small";
+                return "small";
                 
                 case 14:
                 Price = 12;
-                return "Medium";
+                return "medium";
 
                 case 16:
                 Price = 14;
-                return "Large";
+                return "large";
 
                 case 21:
                 Price = 16;
-                return "Extra-Large";
+                return "extralarge";
 
                 default:
                 return "";
@@ -49,19 +49,24 @@ namespace PizzaStore.Domain
         {
             switch(x)
             {
-                case "Small":
+                case "small":
+                Price = 10;
                 return 12;
                 
-                case "Medium":
+                case "medium":
+                Price = 12;
                 return 14;
 
-                case "Large":
+                case "large":
+                Price = 14;
                 return 16;
 
-                case "Extra-Large":
+                case "extralarge":
+                Price= 16;
                 return 21;
 
                 default:
+                Price = 10;
                 return 0;
             }
         }

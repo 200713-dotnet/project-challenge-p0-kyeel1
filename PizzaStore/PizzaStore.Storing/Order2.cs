@@ -7,6 +7,7 @@ namespace PizzaStore.Storing
     {
         public Order2()
         {
+            OrderJunction2 = new HashSet<OrderJunction2>();
             PizzaOrderJunction2 = new HashSet<PizzaOrderJunction2>();
         }
 
@@ -15,6 +16,7 @@ namespace PizzaStore.Storing
         public bool IsValid { get; set; }
         public DateTime DateModified { get; set; }
 
+        public virtual ICollection<OrderJunction2> OrderJunction2 { get; set; }
         public virtual ICollection<PizzaOrderJunction2> PizzaOrderJunction2 { get; set; }
     }
 }
